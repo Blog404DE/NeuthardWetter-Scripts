@@ -95,6 +95,8 @@ $config[] = array(	"remoteFolder"  => "/gds/gds/specials/radar",
 	
 	```"forceRebuild"``` dient ausschließlich zu Test-Zwecken und dient dazu das Script anzuweisen auf jeden Fall alle Videos neu zu erstellen unabhängig davon, ob neue Radar-Bilder hinzugekommen sind. Standardmäßig sollte dieser Parameter auf *false* stehen.
 	
+	**Hinweis:** Um Videos für mehrere Bereiche in Deutschland zu erstellen, können Sie das ```$config[]``` Array entsprechend um weitere Einträge erweitern. Beispielhaft sind in der Beispiel-Konfiguration zwei Array-Elemente enthalten - jeweils für Süd/West-Deutschland und Gesamt-Deutschland.
+	
 
 ### Das PHP-Script ausführbar machen und als Cronjob hinterlegen
 
