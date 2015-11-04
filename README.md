@@ -5,7 +5,7 @@ Diese Scriptsammlung dient zur einfachen Abfrage mehrere Informationen, die im R
 ###Welche Scripte werden aktuell angeboten?
 
 - **Regen Radar:**
-Ein Script zum erstellen von Regenradar-Videos für Deutschland und/oder eines bestimmten Bundeslandes im Format mp4, webm und als animierte GIF. (Anleitung)
+Ein Script zum erstellen von Regenradar-Videos für Deutschland und/oder eines bestimmten Bundeslandes im Format mp4, webm und als animierte GIF. Die [Installations-Anleitung](https://github.com/Blog404DE/NeuthardWetterScripts/blob/master/Regen%20Radar/INSTALL.md) sowie das Script selber findet sich im [Unterordner Regen Radar](https://github.com/Blog404DE/NeuthardWetterScripts/tree/master/Regen%20Radar).
 
 Weitere Scripte zum Thema Wetter-Seiten und DWD werden in Zukunft ebenfalls hier unter MIT Lizenz veröffentlicht.
 
