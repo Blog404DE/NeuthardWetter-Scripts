@@ -209,7 +209,7 @@ Liegt aktuell keine Wetterwarnung für die aktuelle Warnregion vor, so sieht die
 | area			| Bezeichnung der Region auf die die Wetterwarnung zutrifft |
 | stateShort	| Abkürzung des Bundesland in dem die Warnregion sich befindet |
 | stateLong		| Ausgeschriebener Name des Bundeslandes in dem sich die Warnregion befindet |
-| altitude		| Unterer Wert des Höhenbereichs in **Meter**  |
+| altitude		| Unterer Wert des Höhenbereichs in **Meter** ³ |
 | ceiling		| Oberer Wert Wert des Höhenbereichs in **Meter** ³ |
 | hoehenangabe	| Höhenangabe in Text-Form (ebenfalls in Meter) ³ |
 | description	| Beschreibungstext der Warnung bzw. Vorwarnung ¹ |
