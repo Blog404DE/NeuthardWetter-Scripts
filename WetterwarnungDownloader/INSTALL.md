@@ -51,7 +51,7 @@ Bitte beachtet: es handelt sich um eine erste Vorab-Version des Scripts. Auch we
 
 Wichtig für das Script ist zu ermitteln, für welche Kennung die Warnregion besitzt, für welche man die Wetterwarnungen ermitteln möchte. Eine Liste der Regionen findet sich in der im vorherigen Schritt heruntergeladenen ```legend_warnings.pdf``` ab Seite 14. In der Spalte "Warngebiet im DWD" findet sich der Name des Gebiets und in der Spalte "WarnCellIdab Ende 2015 (cap)" die zwingend für die Konfiguration benötigte WarnCellID. 
 
-> **Anmerkung:** Nutzen SIe ausschließlich die Nummer aus der genannten Spalte. Die Zahlen in den restlichen beiden Spalten sind für andere Warnmeldungen in einem anderen Format bzw. seit dem 10/2015 nicht mehr aktiv. Sollten Sie die falsche Nummer verwenden, so kann das Script keine Wetterwarnungen finden.
+> **Anmerkung:** Nutzen Sie ausschließlich die Nummer aus der genannten Spalte. Die Zahlen in den restlichen beiden Spalten sind für andere Warnmeldungen in einem anderen Format bzw. seit dem 10/2015 nicht mehr aktiv. Sollten Sie die falsche Nummer verwenden, so kann das Script keine Wetterwarnungen finden.
 	
 
 ### Konfiguration des Script zum abrufen der Wetter-Warnungen:
@@ -190,7 +190,7 @@ Das Script erzeugt eine JSON Datei mit den Informationen zu den entsprechenden W
 ]
 ```
 
-Liegt aktuall keine Wetterarnung für die aktuelle Warnregion vor, so sieht die JSON Datei wie folgt aus:
+Liegt aktuell keine Wetterwarnung für die aktuelle Warnregion vor, so sieht die JSON Datei wie folgt aus:
 
 ```json
 ["false"]
@@ -200,28 +200,28 @@ Liegt aktuall keine Wetterarnung für die aktuelle Warnregion vor, so sieht die 
 
 | Wert        	| Erklärung     |
 | ------------- | ------------- |
-| severity      | Warnstufe der Meldung^1 |
-| urgency       | Zeitrahmen der Meldung^1  |
-| warnstufe		| Die Warnstufe (0 = Vorabinformation bis 4 = Extreme Unwetterwarnung)^2 |
+| severity      | Warnstufe der Meldung ¹ |
+| urgency       | Zeitrahmen der Meldung ¹  |
+| warnstufe		| Die Warnstufe (0 = Vorabinformation bis 4 = Extreme Unwetterwarnung) ² |
 | startzeit		| Beginn der Wetterwarnung als serialisiertes DateTime Objekt |
 | endzeit		| Ablauf-Datum der Wetterwarnung als serialisiertes DateTime Objekt |
 | headline		| Überschrift der Wetterwarnung|
 | area			| Bezeichnung der Region auf die die Wetterwarnung zutrifft |
 | stateShort	| Abkürzung des Bundesland in dem die Warnregion sich befindet |
 | stateLong		| Ausgeschriebener Name des Bundeslandes in dem sich die Warnregion befindet |
-| altitude		| Unterer Wert des Höhenbereichs in **Meter**^3 |
-| ceiling		| Oberer Wert Wert des Höhenbereichs in **Meter**^3 |
-| hoehenangabe	| Höhenangabe in Text-Form (ebenfalls in Meter)^3 |
-| description	| Beschreibungstext der Warnung bzw. Vorwarnung ^1 |
-| instruction	| Zusatztext zur Warnung und optional ein Verlängerungshinweis sowie Ersetzungshinweis ^1 |
-| event			| Art des Wettereignisses in Kurzform ^1 |
+| altitude		| Unterer Wert des Höhenbereichs in **Meter**  |
+| ceiling		| Oberer Wert Wert des Höhenbereichs in **Meter** ³ |
+| hoehenangabe	| Höhenangabe in Text-Form (ebenfalls in Meter) ³ |
+| description	| Beschreibungstext der Warnung bzw. Vorwarnung ¹ |
+| instruction	| Zusatztext zur Warnung und optional ein Verlängerungshinweis sowie Ersetzungshinweis ¹ |
+| event			| Art des Wettereignisses in Kurzform ¹ |
 | sender		| Ausstellendes Rechenzentrum des DWD |
 
-^1 Bei diesen Angaben handelt es sich die direkte unveränderte Übernahme aus der Wetterwarnung des DWD. Eine Erklärung der jeweiligen Werte findet sich in der unter *Vorbereitung* heruntergeladenen Datei [legend_warnings_CAP.pdf](https://werdis.dwd.de/infos/legend_warnings_CAP.pdf).
+¹ Bei diesen Angaben handelt es sich die direkte unveränderte Übernahme aus der Wetterwarnung des DWD. Eine Erklärung der jeweiligen Werte findet sich in der unter *Vorbereitung* heruntergeladenen Datei [legend_warnings_CAP.pdf](https://werdis.dwd.de/infos/legend_warnings_CAP.pdf).
 
-^2 Die Warnstufen lauten wie folgt: 0 = Vorwarnung, 1 = Wetterwarnung, 2 = Markante Wetterwarnung, 3 = Unwetterwarnung, 4 = Extreme Unwetterwarnung
+² Die Warnstufen lauten wie folgt: 0 = Vorwarnung, 1 = Wetterwarnung, 2 = Markante Wetterwarnung, 3 = Unwetterwarnung, 4 = Extreme Unwetterwarnung
 
-^3 Die Höhenangaben sind im Gegensatz zu der Orginal Wetterwarnung in Meter umgerechnet und können damit direkt verwendet werden. Zusätzliche Angaben zu den Höhenwerten findet sich ebenfalls in der [legend_warnings_CAP.pdf](https://werdis.dwd.de/infos/legend_warnings_CAP.pdf).
+³ Die Höhenangaben sind im Gegensatz zu der Orginal Wetterwarnung in Meter umgerechnet und können damit direkt verwendet werden. Zusätzliche Angaben zu den Höhenwerten findet sich ebenfalls in der [legend_warnings_CAP.pdf](https://werdis.dwd.de/infos/legend_warnings_CAP.pdf).
 
 ## Abschluss
 
