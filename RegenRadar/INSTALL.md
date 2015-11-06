@@ -96,14 +96,38 @@ $config[] = array(	"remoteFolder"  => "/gds/gds/specials/radar",
 	chmod +x genRegenRadar.php
 	```
 	
-2. Cronjob anlegen 
+2. Shell-Script für den Aufruf als Cronjob. Ein direkter Aufruf bietet sich nicht an, da es ansonsten zu parallelen Aufruf des Scripts kommen kann. Dies kann dabei zu unerwünschten Effekten führen bis zum kompletten hängen des Systems. 
 
-	```sh
-	crontab -e
+	Um dies zu verhindern bietet sich die Verwendung einer Lock-Datei an, wie in folgendem Beispiel exemplarisch gezeigt:
+	
+	```bash
+	#!/bin/bash
+	LOCKFILE=/tmp/$(whoami)_$(basename $0).lock
+	[ -f $LOCKFILE ] && { echo "$(basename $0) läuft schon"; exit 1; }
+
+	lock_file_loeschen() {
+    	    rm -f $LOCKFILE
+	}
+
+	trap "lock_file_loeschen ; exit 1" 2 9 15
+
+	# Lock-Datei anlegen
+	echo $$ > $LOCKFILE
+
+
+	# Starte Script
+	/pfad/zum/script/genRegenRadar.php
+
+	# Lösche Lockfile
+	lock_file_loeschen
+	exit 0
 	```
+
+	In diesem Script müssen Sie selbstverständlich den Pfad zum Regenrader-Script entsprechend anpassen.
+
 	
 	Als Update-Frequenz für die Videos hat sich alle 15 Minuten herausgestellt, auch wenn der DWD alle 5 Minuten neue Bilder hinterlegt. Bei der gewünschten Update-Frequenz sollte beachtet werden, dass das erzeugen der Videos je nach System einige Zeit beansprucht (insbesondere die animierte GIF Datei). Für ein ausführen des Cronjob alle 15 Minuten würde die Cronjob-Zeile wie folgt aussehen:
-	```*/15 * * * * /pfad/zum/script/genRegenRadar.php```
+	```*/15 * * * * /pfad/zum/script/cron.genRegenRadar.sh```, wobei hier der Pfad zum Shell-Script aus Schritt 2 angepasst werden muss.
 	
 
 --
