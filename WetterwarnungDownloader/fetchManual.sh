@@ -4,11 +4,12 @@
 FTPUSER="**********"
 FTPPASSWD="********"
 
-echo Starte Download der WarnCellID Liste:
-wget ftp://$FTPUSER:$FTPPASSWD@ftp-outgoing2.dwd.de/gds/specials/warnings/legend_warnings.pdf
+echo Lade Liste mit WarnCellID:
+wget ftp://$FTPUSER:$FTPPASSWD@ftp-outgoing2.dwd.de/gds/help/legend_warnings_CAP_WarnCellsID.csv
 
-echo Starte Download der restlichen Entwickler-Dokumentation vom DWD:
-wget ftp://$FTPUSER:$FTPPASSWD@ftp-outgoing2.dwd.de/gds/specials/legend_basic_service_level.pdf
-wget https://werdis.dwd.de/infos/legend_warnings_CAP.pdf
+echo Starte Download der restlichen Entwickler-Dokumentation und FAQ vom DWD:
+wget ftp://$FTPUSER:$FTPPASSWD@ftp-outgoing2.dwd.de/gds/help/legend_warnings.pdf
+wget ftp://$FTPUSER:$FTPPASSWD@ftp-outgoing2.dwd.de/gds/help/legend_warnings_CAP.pdf
+wget ftp://$FTPUSER:$FTPPASSWD@ftp-outgoing2.dwd.de/gds/help/legend_warnings_CAP_FAQ.pdf
 
 exit 0

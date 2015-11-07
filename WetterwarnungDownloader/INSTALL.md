@@ -41,7 +41,7 @@ Bitte beachtet: es handelt sich um eine erste Vorab-Version des Scripts. Auch we
 	./fetchManual.sh
 	```
 	
-	... und erhalten 3 zusätzliche PDF Dateien: *legend_warnings.pdf, legend_basic_service_level.pdf und legend_warnings_CAP.pdf*
+	Nach dem ausführen des Scripts befinden sich mehrere PDF-Dateien und eine CSV Datei im aktuellen Verzeichnis. Es handelt sich dabei um verschiedene Anleitungen und eine Liste der Warn-Regionen des DWD, welche später unter anderem für die Konfiguration notwendig sind. Zusätzlich sind diese Dokumente auch interessant für eventuelle Anpassungen des Scripts.
 	
 
 > **Wichtiger Hinweis:**
@@ -49,9 +49,9 @@ Bitte beachtet: es handelt sich um eine erste Vorab-Version des Scripts. Auch we
 	
 ### WarnCell ID ermitteln
 
-Wichtig für das Script ist zu ermitteln, für welche Kennung die Warnregion besitzt, für welche man die Wetterwarnungen ermitteln möchte. Eine Liste der Regionen findet sich in der im vorherigen Schritt heruntergeladenen ```legend_warnings.pdf``` ab Seite 14. In der Spalte "Warngebiet im DWD" findet sich der Name des Gebiets und in der Spalte "WarnCellIdab Ende 2015 (cap)" die zwingend für die Konfiguration benötigte WarnCellID. 
+Wichtig für das Script ist zu ermitteln, für welche Kennung die Warnregion besitzt, für welche man die Wetterwarnungen ermitteln möchte. Eine Liste der Regionen findet sich in der im vorherigen Schritt heruntergeladenen ```legend_warnings_CAP_WarnCellsID.csv``` oder ```legend_warnings.pdf```. In der PDF Datei befindet sich die Liste ab Seite 14 und relativ ist die Spalte ```Warngebiet im DWD``` (Name des Gebiets) sowie ```WarnCellIdab Ende 2015 (cap)``` (die zwingend für die Konfiguration benötigte WarnCellID). Die CSV Datei können Sie in einer beliebigen Tabellenkalkulationsprogramm (OpenOffice, LibreOffice, Microsoft Excel oder Numbers) öffnen und relevant sind hier die Spalten ```WARNCELLID``` sowie ```NAME```. 
 
-> **Anmerkung:** Nutzen Sie ausschließlich die Nummer aus der genannten Spalte. Die Zahlen in den restlichen beiden Spalten sind für andere Warnmeldungen in einem anderen Format bzw. seit dem 10/2015 nicht mehr aktiv. Sollten Sie die falsche Nummer verwenden, so kann das Script keine Wetterwarnungen finden.
+> **Anmerkung:** Nutzen Sie ausschließlich die Nummer aus den genannten Spalten. Die Zahlen in den restlichen beiden Spalten sind für andere Warnmeldungen in einem anderen Format bzw. seit dem 10/2015 nicht mehr aktiv. Sollten Sie die falsche Nummer verwenden, so kann das Script keine Wetterwarnungen finden.
 	
 
 ### Konfiguration des Script zum abrufen der Wetter-Warnungen:
@@ -77,7 +77,7 @@ Die anzupassenden Konfigurationsparameter in der *config.inc.php* lauten wie fol
 	$unwetterConfig["WarnCellId"]      = "908215999";  
 	```
 	
-	Die WarnCellID ist dabei die Nummer, welche im vorherigen Schritt aus der Datei *legend_warnings.pdf* ermittelt wurde.
+	Die WarnCellID ist dabei die Nummer, welche im vorherigen Schritt ermittelt wurde.
 	
 3. Speicherpfad für die JSON Datei mit den Wetterwarnung-Daten:
 
