@@ -106,16 +106,17 @@ Die anzupassenden Konfigurationsparameter in der *config.inc.php* lauten wie fol
 	
 	Dieser Konfigurationsparameter muss in der Regel nicht angepasst werden, sofern sich die Verzeichnisstruktur auf dem FTP Server nicht ändert. Normalerweise werden solche Änderungen vom DWD per E-Mail vorher auch mitgeteilt.  
 
-6. (optional) Im Fehlerfall eine E-Mail zustellen:
+6. (optional) Für Fehler-Debugging: im Fehlerfall eine E-Mail zustellen:
 
 	```php
 	$optFehlerMail		= array("empfaenger" => "deine.email@example.org",
 							"absender"	 => "deine.email@example.org");										
 	```
 	
-	Dieses Array beinhaltet die Absender- und Empfänger-Adresse die für den Versand von E-Mails im Fehlerfall verwendet werden.
+	Dieses Array beinhaltet die Absender- und Empfänger-Adresse die für den Versand von E-Mails im Fehlerfall verwendet werden. Die E-Mail Unterstützung sollte *ausschließlich* zu *Debug-Zwecken* aktiviert werden, da durchaus viele E-Mails generiert werden können. Es besteht auch die Möglichkeit die Fehler in eine Log-Datei aufzeichnen zu lassen. Näheres hierzu bei der Erklärung zur EInrichtung als Cronjob.
+	
 
-> **Hinweis:** Die hin 3 und 4 angegebenen Pfade müssen auf Ihrem System bereits existieren, da es ansonsten zu einer Fehlermeldung beim ausführen des Scripts kommt. 
+> **Hinweise:** Die hin 3 und 4 angegebenen Pfade müssen auf Ihrem System bereits existieren, da es ansonsten zu einer Fehlermeldung beim ausführen des Scripts kommt. 
 
 ### Das PHP-Script ausführbar machen und als Cronjob hinterlegen
 
@@ -161,7 +162,26 @@ Die anzupassenden Konfigurationsparameter in der *config.inc.php* lauten wie fol
 	```
 	
 	Als Update-Frequenz hat sich alle 10 bis 14 Minuten herausgestellt, auch wenn der DWD öfters die Wetterdaten aktualisiert (z.T. minütlich). Für ein ausführen des Cronjob alle 15 Minuten würde die Cronjob-Zeile wie folgt aussehen:
-	```*/10 * * * * /pfad/zum/script/cron.WetterBot.sh```, wobei hier der Pfad zum Shell-Script aus Schritt 2 angepasst werden muss.
+	```*/10 * * * * /pfad/zum/script/cron.WetterBot.sh >/dev/null```, wobei hier der Pfad zum Shell-Script aus Schritt 2 angepasst werden muss.
+	
+#### Loggen der Ausgabe und Fehler-Handling:
+
+Es besteht die Möglichkeit die Ausgabe des Scripts in Log-Dateien aufzeichnen zu lassen. Hierfür existieren mehrere Möglichkeiten. 
+
+1. Sie können die komplette Ausgabe des Scripts aufzeichnen, indem Sie in der Cronjob-Zeile folgendes hinzufügen:
+
+	```*/10 * * * * /pfad/zum/script/cron.WetterBot.sh 2>&1 >>/var/log/wetterwarnbot_log```
+
+	*2>&1* bewirkt, dass die Fehlermeldungen umgeleitet und zusammen mit der Standardmeldungen ausgegeben werden. *>>* wiederum bewirkt, dass die Standardmeldungen in die danachfolgende Datei fortlaufend geschrieben werden.
+
+2. Es besteht aber auch die Möglichkeit nur Fehler aufzuzeichnen, indem Sie folgende Änderung vornehmen:
+
+	```*/10 * * * * /pfad/zum/script/cron.WetterBot.sh 2>>/var/log/wetterwarnbot_log >/dev/null```
+
+	*2>>* leitet in diesem Fall die Fehlermeldungen fortlaufend in die angegebene Datei um, während die Standard-Ausgaben über *>/dev/null* in den virtuellen Papierkorb übermittelt werden.
+	
+Die zweite Variante empfiehlt sich dabei für den Live-Betrieb, während die erste Variante primär für Debug-Zwecke geeignet ist. Man sollte desweiteren beachten, dass die Log-Dateien regelmäßig bereinigt werden z.B. mittels logrotate (ähnlich den System-Logs). 
+
 	
 ## Erklärung zur JSON Datei mit der Wetterwarnung
 

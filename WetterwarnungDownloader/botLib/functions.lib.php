@@ -138,7 +138,9 @@ function getZipErrorMessage($errCode) {
  */
 function sendErrorMessage($optFehlerMail, $fehlerdetails) {
 	// Fehler-Handling
-	fwrite(STDERR, PHP_EOL . "!!!!! " . $fehlerdetails . PHP_EOL . PHP_EOL);
+	fwrite(STDOUT, PHP_EOL);
+	fwrite(STDERR, date("Y-m-d H:i:s") . ": " . $fehlerdetails . PHP_EOL);
+	fwrite(STDOUT, PHP_EOL);
 
 	// Optional Mail an den Admin absenden
 	if(count($optFehlerMail) == 2) {
@@ -153,10 +155,12 @@ function sendErrorMessage($optFehlerMail, $fehlerdetails) {
 
 				sendmail($optFehlerMail["absender"], $optFehlerMail["empfaenger"], $mailBetreff, $message);
 			} else {
-				fwrite(STDERR, "Versand der Fehler-Mail wurde nicht durchgeführt - bitte prüfen Sie die Konfiguration des Wetter-Bots." . PHP_EOL);
+				fwrite(STDOUT, PHP_EOL);
+				fwrite(STDERR, date("Y-m-d H:i:s") . ": Versand der Fehler-Mail wurde nicht durchgeführt - bitte prüfen Sie die Konfiguration des Wetter-Bots." . PHP_EOL);
 			}
 		} else {
-			fwrite(STDERR, "Versand der Fehler-Mail wurde nicht durchgeführt - bitte prüfen Sie die Konfiguration des Wetter-Bots." . PHP_EOL);
+			fwrite(STDOUT, PHP_EOL);
+			fwrite(STDERR, date("Y-m-d H:i:s") . ": Versand der Fehler-Mail wurde nicht durchgeführt - bitte prüfen Sie die Konfiguration des Wetter-Bots." . PHP_EOL);
 		}
 	}
 
@@ -180,8 +184,7 @@ function sendmail($absender, $empfaenger, $betreff, $message) {
 		"X-MSMail-Priority: High\r\n" .
 		"Importance: High\r\n";
 
-		mail($empfaenger, $betreff, $message, $mailHeader);
-
+	mail($empfaenger, $betreff, $message, $mailHeader);
 }
 
 /**
