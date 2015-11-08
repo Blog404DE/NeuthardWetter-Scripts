@@ -1,8 +1,8 @@
 <?php
 /*
  * Wetterwarn-Bot für neuthardwetter.de by Jens Dutzi
- * Version 0.5
- * 06.11.2015
+ * Version 0.6
+ * 08.11.2015
  * (c) tf-network.de Jens Dutzi 2012-2015
  *
  * Lizenzinformationen (MIT License):
@@ -362,7 +362,8 @@ function parseWetterWarnung($config, $optFehlerMail) {
 				}
 
 				if (! isset($wetterWarnung->{"expires"})) {
-					throw new Exception("Fehler in parseWetterWarnung: Die XML Datei beinhaltet kein 'expires'-Node.");
+					$expires = $onset;
+					$dateExpires = $dateOnset;
 				} else {
 					$strRawDate = str_replace("+00:00", "", (string)$wetterWarnung->{"expires"});
 					$dateExpires = DateTime::createFromFormat('Y-m-d*H:i:s', $strRawDate, new DateTimeZone("UTC"));
@@ -377,7 +378,7 @@ function parseWetterWarnung($config, $optFehlerMail) {
 				// Aktuelle Uhrzeit
 				$dateCurrent = new DateTime("now", new DateTimeZone("Europe/Berlin"));
 
-				if ($dateExpires->getTimestamp() <= $dateCurrent->getTimestamp()) {
+				if ($dateExpires->getTimestamp() <= $dateCurrent->getTimestamp() && $dateExpires->getTimestamp() != $dateOnset->getTimestamp()) {
 					// Warnung ist bereits abgelaufen
 					echo ("--> Hinweis: Warnung über " . $event . " ist bereits am " . $expires . " abgelaufen und wird ingoriert" . PHP_EOL);
 				} else {
@@ -419,8 +420,8 @@ function parseWetterWarnung($config, $optFehlerMail) {
 						}
 					}
 
-					// Im Fall einer Vorhersage auf 0 setzen
-					if ($urgency == "Future") {
+					// Im Fall einer Vorhersage (Urgency == Future oder OnSet-Zeitpunkt in der Zukunft)
+					if ($urgency == "Future" || $dateOnset->getTimestamp() >= $dateCurrent->getTimestamp()) {
 						$warnstufe = 0;
 					}
 
@@ -506,9 +507,11 @@ function parseWetterWarnung($config, $optFehlerMail) {
 	$tmpWetterWarnung = tempnam(sys_get_temp_dir(), 'WetterWarnung');
 
 	if (count($arrWetterWarnungenJson) == 0) {
-		file_put_contents($tmpWetterWarnung, json_encode(array("false")));
+		$arrFinal = array("anzahl" => 0, "wetterwarnungen" => array());
+		file_put_contents($tmpWetterWarnung, json_encode($arrFinal));
 	} else {
-		file_put_contents($tmpWetterWarnung, json_encode($arrWetterWarnungenJson));
+		$arrFinal = array("anzahl" => count($arrWetterWarnungenJson), "wetterwarnungen" => $arrWetterWarnungenJson);
+		file_put_contents($tmpWetterWarnung, json_encode($arrFinal));
 	}
 
 	// Führe Vergleich durch
@@ -523,7 +526,7 @@ function parseWetterWarnung($config, $optFehlerMail) {
 		echo ("-> Alt (" . $md5wetterwarnung_alt . ") | Neu (" . $md5wetterwarnung_neu . ") -> ");
 		if ($md5wetterwarnung_alt != $md5wetterwarnung_neu) {
 			$forceWetterwarungUpdate = true;
-			echo ("Neue Wetterwarnung-Daten vorhanden" . PHP_EOL);
+			echo ("Aktualisierte Wetterwarnungen vorhanden" . PHP_EOL);
 			if(!@rename($tmpWetterWarnung, $config["localJsonWarnfile"])) {
 				throw new Exception("Fehler in parseWetterWarnung: Json-Warndatei " . $config["localJsonWarnfile"] . " konnte nicht überrschrieben werden");
 			}

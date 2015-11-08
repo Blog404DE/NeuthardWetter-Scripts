@@ -6,6 +6,10 @@ Bei dem Wetterwarnung-Downloader handelt es sich um ein Script zum automatischen
 
 Bitte beachtet: es handelt sich um eine erste Vorab-Version des Scripts. Auch wenn das Script ausführlich getestet wurde, so kann niemand garantieren, dass keine Fehler oder Probleme auftreten. 
 
+##### Wichtige Änderungen:
+- *08.11.2015:* Die Struktur der Ziel-JSON Datei wurde vereinheitlicht und um ein Zähler mit der Anzahl der Wetterwarnungen erweitert. Anpassungen an den Scripten sind daher notwendig.
+	
+
 ## Anleitung zur Einrichtung des Wetterwarnung-Downloader
 
 ### Vorraussetzungen:
@@ -185,46 +189,54 @@ Die zweite Variante empfiehlt sich dabei für den Live-Betrieb, während die ers
 	
 ## Erklärung zur JSON Datei mit der Wetterwarnung
 
-Das Script erzeugt eine JSON Datei mit den Informationen zu den entsprechenden Wetterwarnungen. Hier ein Beispiel für diese Datei (exemplarisch mit einer Meldung, wobei das Array mit den Wetterwarnungen durchaus mehrere Meldungen beinhalten kann):
+Das Script erzeugt eine JSON Datei mit, welche die Anzahl der Wetterrwarnungen *(anzahl)* sowie die Informationen zu den entsprechenden Wetterwarnungen *(wetterwarnungen)* enthält. Hier zwei Beispiele für diese Datei (exemplarisch mit einer Meldung, wobei das Array mit den Wetterwarnungen durchaus mehrere Meldungen beinhalten kann sowie ein Beispiel einer Datei falls keine Wetterwarnung aktuell existiert):
 
 ```json
-[  
-   {  
-      "severity":"Wetterwarnung",
-      "urgency":"Immediate",
-      "warnstufe":1,
-      "startzeit":"O:8:\"DateTime\":3:{s:4:\"date\";s:26:\"2015-11-04 10:03:00.000000\";s:13:\"timezone_type\";i:3;s:8:\"timezone\";s:13:\"Europe\/Berlin\";}",
-      "endzeit":"O:8:\"DateTime\":3:{s:4:\"date\";s:26:\"2015-11-05 12:00:00.000000\";s:13:\"timezone_type\";i:3;s:8:\"timezone\";s:13:\"Europe\/Berlin\";}",
-      "headline":"Amtliche WARNUNG vor NEBEL",
-      "area":"Kreis Gie\u00dfen",
-      "stateShort":"HE",
-      "stateLong":"Hessen",
-      "altutude":0,
-      "ceiling":600,
-      "hoehenangabe":"H\u00f6henlagen unter 600m",
-      "description":"Vor allem in Flussniederungen und Tallagen tritt unterhalb 600 m gebietsweise Nebel mit Sichtweiten unter 150 Meter auf.",
-      "instruction":"",
-      "event":"NEBEL",
-      "sender":"DWD \/ Nationales Warnzentrum Offenbach"
-   }
-]
+{  
+   "anzahl":1,
+   "wetterwarnungen":[  
+      {  
+         "severity":"Markante Wetterwarnung",
+         "urgency":"Immediate",
+         "warnstufe":0,
+         "startzeit":"O:8:\"DateTime\":3:{s:4:\"date\";s:26:\"2015-11-09 00:00:00.000000\";s:13:\"timezone_type\";i:3;s:8:\"timezone\";s:13:\"Europe\/Berlin\";}",
+         "endzeit":"O:8:\"DateTime\":3:{s:4:\"date\";s:26:\"2015-11-10 00:00:00.000000\";s:13:\"timezone_type\";i:3;s:8:\"timezone\";s:13:\"Europe\/Berlin\";}",
+         "headline":"Amtliche WARNUNG vor STURMB\u00d6EN",
+         "area":"Kreis Rastatt",
+         "stateShort":"BW",
+         "stateLong":"Baden-W\u00fcrtemberg",
+         "altutude":1000,
+         "ceiling":3000,
+         "hoehenangabe":"H\u00f6henlagen \u00fcber 1000m",
+         "description":"Es treten oberhalb 1000 m Sturmb\u00f6en mit Geschwindigkeiten um 75 km\/h (21m\/s, 41kn, Bft 9) aus s\u00fcdwestlicher Richtung auf.",
+         "instruction":"ACHTUNG! Hinweis auf m\u00f6gliche Gefahren: Es k\u00f6nnen zum Beispiel einzelne \u00c4ste herabst\u00fcrzen. Achten Sie besonders auf herabfallende Gegenst\u00e4nde.",
+         "event":"STURMB\u00d6EN",
+         "sender":"DWD \/ Nationales Warnzentrum Offenbach"
+      }
+   ]
+}
 ```
 
 Liegt aktuell keine Wetterwarnung für die aktuelle Warnregion vor, so sieht die JSON Datei wie folgt aus:
 
 ```json
-["false"]
+{  
+   "anzahl":0,
+   "wetterwarnungen":[  
+
+   ]
+}
 ```
 
-### Erklärung der einzelnen Werte
+### Erklärung der einzelnen Werte des Wetterwarnung-Array
 
 | Wert        	| Erklärung     |
 | ------------- | ------------- |
 | severity      | Warnstufe der Meldung ¹ |
-| urgency       | Zeitrahmen der Meldung ¹  |
+| urgency       | Soll Wetterwarnung sofort ausgegeben werden oder in der Zukunft ¹  |
 | warnstufe		| Die Warnstufe (0 = Vorabinformation bis 4 = Extreme Unwetterwarnung) ² |
-| startzeit		| Beginn der Wetterwarnung als serialisiertes DateTime Objekt |
-| endzeit		| Ablauf-Datum der Wetterwarnung als serialisiertes DateTime Objekt |
+| startzeit		| Beginn der Wetterwarnung als *serialisiertes DateTime* Objekt ⁴|
+| endzeit		| Ablauf-Datum der Wetterwarnung als *serialisiertes* DateTime Objekt. **Wichtig:** Ist *startzeit und *endzeit* identisch, dann existiert keine Endzeit und der Wert sollte in der Ausgabe ignoriert werden) ⁴|
 | headline		| Überschrift der Wetterwarnung|
 | area			| Bezeichnung der Region auf die die Wetterwarnung zutrifft |
 | stateShort	| Abkürzung des Bundesland in dem die Warnregion sich befindet |
@@ -242,6 +254,8 @@ Liegt aktuell keine Wetterwarnung für die aktuelle Warnregion vor, so sieht die
 ² Die Warnstufen lauten wie folgt: 0 = Vorwarnung, 1 = Wetterwarnung, 2 = Markante Wetterwarnung, 3 = Unwetterwarnung, 4 = Extreme Unwetterwarnung
 
 ³ Die Höhenangaben sind im Gegensatz zu der Orginal Wetterwarnung in Meter umgerechnet und können damit direkt verwendet werden. Zusätzliche Angaben zu den Höhenwerten findet sich ebenfalls in der [legend_warnings_CAP.pdf](https://werdis.dwd.de/infos/legend_warnings_CAP.pdf).
+
+⁴ Um z.B. unter PHP auf das serialisierte DateTime Objekt zugreifen zu können, muss es für die Verwendung erst mittels [unserialize](http://php.net/manual/de/function.unserialize.php) in ein DateTime-Objekt deserialisiert werden. **Hinweis:** Ist *startzeit* identisch mit der *endzeit*, dann wurde keine Endzeit vom DWD für die Warnung angegeben und sollte daher bei einer Ausgabe ignoriert werden.
 
 ## Abschluss
 
