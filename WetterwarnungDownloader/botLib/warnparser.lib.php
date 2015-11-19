@@ -490,7 +490,8 @@ function parseWetterWarnung($config, $optFehlerMail) {
 										);
 
 					// Wetterwarnung übergeben
-					$arrWetterWarnungenJson[] = $tempWarnArray;
+					$md5Hash = md5($warnstufe . $event . $dateOnset->getTimestamp() . $dateExpires->getTimestamp() . $areaDesc . $headline . $description . $instruction);
+					$arrWetterWarnungenJson[$md5Hash] = $tempWarnArray;
 				}
 			}
 		}
@@ -498,19 +499,27 @@ function parseWetterWarnung($config, $optFehlerMail) {
 		echo ("-> Keine Warnmeldungen zum verarbeiten vorhanden" . PHP_EOL);
 	}
 
+	// Sortiere Warnmeldungen mittels MD5Hash der Meldung und speichere Ergebnis erneut als Array ohne Keys
+	// damit keine Änderungen der Reihenfolge bei Updates der DWD-Wetterwarnung erfolgt
+	asort($arrWetterWarnungenJson);
+	$tmpSortedWetterWarnungJson = array();
+	foreach ($arrWetterWarnungenJson as $key => $value) {
+		$tmpSortedWetterWarnungJson[] = $value;
+	}
+
 	// Speichere bei Bedarf die Wetterdaten
 	echo (PHP_EOL . "Beginne mit dem Speichervorgang für die Wetterwarnungen in Temporär-Dateien. " . PHP_EOL);
-	echo ("-> Anzahl der WetterWarnungen: " . count($arrWetterWarnungenJson) . PHP_EOL);
+	echo ("-> Anzahl der WetterWarnungen: " . count($tmpSortedWetterWarnungJson) . PHP_EOL);
 	echo (PHP_EOL);
 
 	// Temporär-Dateien erzeugen
 	$tmpWetterWarnung = tempnam(sys_get_temp_dir(), 'WetterWarnung');
 
-	if (count($arrWetterWarnungenJson) == 0) {
+	if (count($tmpSortedWetterWarnungJson) == 0) {
 		$arrFinal = array("anzahl" => 0, "wetterwarnungen" => array());
 		file_put_contents($tmpWetterWarnung, json_encode($arrFinal));
 	} else {
-		$arrFinal = array("anzahl" => count($arrWetterWarnungenJson), "wetterwarnungen" => $arrWetterWarnungenJson);
+		$arrFinal = array("anzahl" => count($tmpSortedWetterWarnungJson), "wetterwarnungen" => $tmpSortedWetterWarnungJson);
 		file_put_contents($tmpWetterWarnung, json_encode($arrFinal));
 	}
 
