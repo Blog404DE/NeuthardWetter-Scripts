@@ -232,6 +232,7 @@ Liegt aktuell keine Wetterwarnung für die aktuelle Warnregion vor, so sieht die
 
 | Wert        	| Erklärung     |
 | ------------- | ------------- |
+| hash			| md5-Hash erzeugt aus den Angaben der Meldung |
 | severity      | Warnstufe der Meldung ¹ |
 | urgency       | Soll Wetterwarnung sofort ausgegeben werden oder in der Zukunft ¹  |
 | warnstufe		| Die Warnstufe (0 = Vorabinformation bis 4 = Extreme Unwetterwarnung) ² |
