@@ -2,8 +2,8 @@
 <?php
 /*
  * Wetterwarn-Bot für neuthardwetter.de by Jens Dutzi
- * Version 0.6
- * 08.11.2015
+ * Version 1.0
+ * 30.11.2015
  * (c) tf-network.de Jens Dutzi 2012-2015
  *
  * Lizenzinformationen (MIT License):
