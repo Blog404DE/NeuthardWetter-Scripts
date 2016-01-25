@@ -427,8 +427,8 @@ function parseWetterWarnung($config, $optFehlerMail) {
 							}
 						}
 
-						// Im Fall einer Vorhersage (Urgency == Future oder OnSet-Zeitpunkt in der Zukunft)
-						if ($urgency == "Future" || $dateOnset->getTimestamp() >= $dateCurrent->getTimestamp()) {
+						// Prüfe ob es sich ausschließlich um eine Vorhersage handelt (Urgency == Future)
+						if ($urgency == "Future") {
 							$warnstufe = 0;
 						}
 
