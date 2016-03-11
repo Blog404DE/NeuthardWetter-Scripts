@@ -2,9 +2,9 @@
 <?php
 /*
  * DWD-Radar Video Konverter für neuthardwetter.de by Jens Dutzi
- * Version 1.5
- * 24.08.2015
- * (c) tf-network.de Jens Dutzi 2012-2015
+ * Version 1.5.1
+ * 11.03.2016
+ * (c) tf-network.de Jens Dutzi 2012-2016
  *
  * Lizenzinformationen (MIT License):
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this
@@ -82,6 +82,10 @@ if($converter["gif"] !== false) {
 
 // FTP-Verbindung aufbauen
 $conn_id = ftp_connect($ftp["host"]);
+if($conn_id === false) {
+    fwrite(STDERR, "FTP Verbindungsaufbau zu " . $ftp["host"] . " ist fehlgeschlagen" . PHP_EOL);
+    exit(1);
+}
 
 // Login mit Benutzername und Passwort
 $login_result = @ftp_login($conn_id, $ftp["username"], $ftp["password"]);
