@@ -302,10 +302,10 @@ function createRadarVideo($conn_id, $config, $converter) {
 	                $cmd ="";
 	                switch ($filetype) {
 	                    case "webm":
-	                        $cmd = $converter["video"] . " -y -framerate 2/1 -i " . $config["localFolder"] . "/frames/frame%03d.jpg -c:v libvpx -r 30 -an -b:v 600k -pix_fmt yuv420p -f webm " . $tmpRegenAnimation;
+	                        $cmd = $converter["video"] . " -loglevel error -hide_banner -nostats -y -framerate 2/1 -i " . $config["localFolder"] . "/frames/frame%03d.jpg -c:v libvpx -r 30 -an -b:v 600k -pix_fmt yuv420p -f webm " . $tmpRegenAnimation;
 	                        break;
 	                    case "mp4":
-	                        $cmd = $converter["video"] . " -y -framerate 2/1 -i " . $config["localFolder"] . "/frames/frame%03d.jpg -c:v libx264 -r 30 -an -b:v 600k -pix_fmt yuv420p -f mp4 " . $tmpRegenAnimation;
+	                        $cmd = $converter["video"] . " -loglevel error -hide_banner -nostats -y -framerate 2/1 -i " . $config["localFolder"] . "/frames/frame%03d.jpg -c:v libx264 -r 30 -an -b:v 600k -pix_fmt yuv420p -f mp4 " . $tmpRegenAnimation;
 	                        break;
 	                    case "gif":
 	                        $cmd = $converter["gif"] . " -delay 50 -loop 0 " . $config["localFolder"] . "/frames/frame*.jpg gif:" . $tmpRegenAnimation;
