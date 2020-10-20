@@ -23,4 +23,4 @@ Bitte beachtet, dass die vom DWD bereitgestellten Daten dem Urheberrecht unterli
 ---
 ##### Lizenz-Information:
 
-Copyright Jens Dutzi 2015-2018 / Stand: 05.01.2018 / Das Werk ist lizenziert unter einer [MIT Lizenz](http://opensource.org/licenses/mit-license.php)
+Copyright Jens Dutzi 2015-2020 / Stand: 20.10.2020 / Das Werk ist lizenziert unter einer [MIT Lizenz](http://opensource.org/licenses/mit-license.php)
