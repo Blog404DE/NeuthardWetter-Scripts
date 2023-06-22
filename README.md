@@ -4,16 +4,18 @@ Diese Scriptsammlung dient zur einfachen Abfrage mehrere Informationen, die im R
 
 ### Welche Scripte werden aktuell angeboten?
 
-- **Regen Radar:**
-
-    Ein Script zum erstellen von Regenradar-Videos für Deutschland und/oder eines bestimmten Bundeslandes im Format mp4, webm und als animierte GIF. Die [Installations-Anleitung](https://github.com/Blog404DE/RegenRadarVideo/blob/master/README.md) sowie das Script selber findet sich unter [https://github.com/Blog404DE/RegenRadarVideo](https://github.com/Blog404DE/RegenRadarVideo).
-
 - **Wetterwarnung Downloader**
 
     Dieses Script dient zum automatisierten herunterladen herunterladen vorhandener Wetterwarnungen für eine bestimmte Region in Deutschland und das speichern der Wetterwarnung als JSON Datei. Die [Anleitung für die Einrichtung](https://github.com/Blog404DE/WetterwarnungDownloader/blob/master/README.md) sowie das Script selber findet sich im [https://github.com/Blog404DE/WetterwarnungDownloader](https://github.com/Blog404DE/WetterwarnungDownloader).
 
 Weitere Scripte zum Thema Wetter-Seiten und DWD werden in Zukunft ebenfalls hier unter MIT Lizenz veröffentlicht.
 
+- **Regen Radar (obsolet):**
+
+    Bei dem Script handelte es sich um eine Software zum erstellen von Regenradar-Videos für Deutschland und/oder eines bestimmten Bundeslandes im Format mp4, webm und als animierte GIF.
+  
+    *Hinweis: Das Script kann aufgrund von Änderungen beim DWD zur Zeit keine Videos mehr erzeugen.*
+  
 ### Hinweise zum DWD OpenData Programm:
 
 Weitergehende Informationen zum DWD OpenData Programm finden sich auf der Homepage des Deutschen Wetterdienst unter [https://www.dwd.de/DE/leistungen/opendata/opendata.html](https://www.dwd.de/DE/leistungen/opendata/opendata.html).
